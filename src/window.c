@@ -31,7 +31,31 @@ GLFWwindow *init_window(int width, int height, const char *title) {
     return window;
 }
 
-void processInput(GLFWwindow *window) {
+void processInput(GLFWwindow *window, vec3 cameraPos, vec3 cameraFront, vec3 cameraUp) {
+    const float cameraSpeed = 0.05f;
+    vec3 temp;
+
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+        glm_vec3_scale(cameraFront, cameraSpeed, temp);
+        glm_vec3_add(cameraPos, temp, cameraPos);
+    }
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+        glm_vec3_scale(cameraFront, cameraSpeed, temp);
+        glm_vec3_sub(cameraPos, temp, cameraPos);
+    }
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+        glm_vec3_cross(cameraFront, cameraUp, temp);
+        glm_vec3_normalize(temp);
+        glm_vec3_scale(temp, cameraSpeed, temp);
+        glm_vec3_sub(cameraPos, temp, cameraPos);
+    }
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+        glm_vec3_cross(cameraFront, cameraUp, temp);
+        glm_vec3_normalize(temp);
+        glm_vec3_scale(temp, cameraSpeed, temp);
+        glm_vec3_add(cameraPos, temp, cameraPos);
+    }
+
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 }

@@ -122,7 +122,7 @@ int main(void) {
         glm_mat4_identity(view);
         vec3 sum;
         glm_vec3_add(cameraPos, cameraFront, sum);
-        glm_lookat(cameraPos, sum, cameraUp);
+        glm_lookat(cameraPos, sum, cameraUp, view);
         
         mat4 projection;
         glm_mat4_identity(projection);
