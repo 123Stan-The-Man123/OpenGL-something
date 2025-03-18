@@ -19,6 +19,8 @@ GLFWwindow *init_window(int width, int height, const char *title) {
     }
 
     glfwMakeContextCurrent(window);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwFocusWindow(window);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         puts("Failed to initialize GLAD.");
@@ -27,6 +29,7 @@ GLFWwindow *init_window(int width, int height, const char *title) {
 
     glViewport(0, 0, 800, 600);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetCursorPosCallback(window, mouse_callback);
     
     return window;
 }
