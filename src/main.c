@@ -14,6 +14,10 @@
 #include "transform.h"
 #include "window.h"
 
+vec3 cameraPos = {0.0f, 0.0f, 3.0f};
+vec3 cameraFront = {0.0f, 0.0f, -1.0f};
+vec3 cameraUp = {0.0f, 1.0f, 0.0f};
+
 int main(void) {
     GLFWwindow *window = init_window(800, 600, "Test"); 
     /* float vertices[] = {
@@ -104,7 +108,7 @@ int main(void) {
     unsigned int projectionLoc = glGetUniformLocation(shaderProgram, "projection");
     
     while (!glfwWindowShouldClose(window)) {
-        processInput(window);
+        processInput(window, cameraPos, cameraFront, cameraUp);
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -116,7 +120,9 @@ int main(void) {
 
         mat4 view;
         glm_mat4_identity(view);
-        apply_translation(view, 0.0f, 0.0f, -3.0f);
+        vec3 sum;
+        glm_vec3_add(cameraPos, cameraFront, sum);
+        glm_lookat(cameraPos, sum, cameraUp);
         
         mat4 projection;
         glm_mat4_identity(projection);
