@@ -31,8 +31,8 @@ GLFWwindow *init_window(int width, int height, const char *title) {
     return window;
 }
 
-void processInput(GLFWwindow *window, vec3 cameraPos, vec3 cameraFront, vec3 cameraUp) {
-    const float cameraSpeed = 0.05f;
+void processInput(GLFWwindow *window, vec3 cameraPos, vec3 cameraFront, vec3 cameraUp, float deltaTime) {
+    const float cameraSpeed = 2.5f * deltaTime;
     vec3 temp;
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {

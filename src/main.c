@@ -14,6 +14,8 @@
 #include "transform.h"
 #include "window.h"
 
+float deltaTime = 0.0f;
+float lastFrame = 0.0f;
 vec3 cameraPos = {0.0f, 0.0f, 3.0f};
 vec3 cameraFront = {0.0f, 0.0f, -1.0f};
 vec3 cameraUp = {0.0f, 1.0f, 0.0f};
@@ -108,7 +110,11 @@ int main(void) {
     unsigned int projectionLoc = glGetUniformLocation(shaderProgram, "projection");
     
     while (!glfwWindowShouldClose(window)) {
-        processInput(window, cameraPos, cameraFront, cameraUp);
+        float currentFrame = glfwGetTime();
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+
+        processInput(window, cameraPos, cameraFront, cameraUp, deltaTime);
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
